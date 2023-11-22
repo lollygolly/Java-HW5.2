@@ -1,22 +1,19 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.netology.services.CountService;
 
 public class CountServiceTest {
 
-    @Test
-    public void testIfMoneyIsTight() {
-        CountService service = new CountService();
-        int expected = 3;
-        int actual = service.calculate(20_000, 10_000, 3_000);
-        Assertions.assertEquals(expected, actual);
-    }
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/Count.csv")
 
-    @Test
-    public void testIfIsMuchMoney() {
+    public void testIfMoneyIsTight(int expected, int threshold, int income, int expenses) {
         CountService service = new CountService();
-        int expected = 2;
-        int actual = service.calculate(150_000, 100_000, 60_000);
+        int actual = service.calculate(threshold, income, expenses);
         Assertions.assertEquals(expected, actual);
     }
 }
+
